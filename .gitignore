@@ -1,0 +1,62 @@
+# Logs
+*.log
+logs/
+log/
+
+# Compiled source files
+*.class
+
+# Maven specific
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# Gradle specific
+.gradle/
+build/
+!gradle-wrapper.jar
+
+# VSCode specific
+.vscode/
+*.code-workspace
+
+# IDE specific (general)
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Eclipse specific
+.project
+.classpath
+.settings/
+target/
+
+# STS specific
+.springBeans/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Application specific
+*.env
+.env
+*.war
+*.jar
+
+# Security
+secrets/
+keys/
+certs/
+
