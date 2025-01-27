@@ -15,6 +15,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.example.expense_tracker.security.JwtAutheticationFilter;
 import com.example.expense_tracker.services.CustomUserDetailsService;
 
+import jakarta.servlet.DispatcherType;
+
 @Configuration
 public class SecurityConfig {
 
@@ -45,16 +47,16 @@ public class SecurityConfig {
     }    
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf((csrf) -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
+            .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
                 .requestMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated()
             )
             .authenticationProvider(authenticationProvider())
             .addFilterBefore(jwtAutheticationFilter, UsernamePasswordAuthenticationFilter.class);
             
-
         return http.build();
     }
     
