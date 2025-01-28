@@ -1,7 +1,10 @@
 package com.example.expense_tracker.services;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.expense_tracker.dtos.ExpenseDto;
@@ -19,21 +22,44 @@ public class ExpenseService {
         this.expenseRepository = expenseRepository;        
     }
 
+    public Page<ExpenseDto> getExpenses(Pageable pageable) {
+        return expenseRepository.findAll(pageable).map(ExpenseMapper::toDto);
+    }
+
+    public ExpenseDto getExpenseById(Long id) {
+        Expense expense = expenseRepository.findById(id)
+            .orElseThrow(() -> new ExpenseNotFoundException(id));
+        return ExpenseMapper.toDto(expense);
+    }
+
     public ExpenseDto createExpense(ExpenseDto expenseDto) {
         Expense expense = ExpenseMapper.toEntity(expenseDto);    
-        return ExpenseMapper.toDto(expenseRepository.save(expense));
+        Expense savedExpense = expenseRepository.save(expense);
+        return ExpenseMapper.toDto(savedExpense);
     }
 
     public ExpenseDto updateExpense(Long id, ExpenseDto expenseDto) {
-        Expense expense = this.expenseRepository.findById(id)
+        Expense expense = expenseRepository.findById(id)
             .orElseThrow(() -> new ExpenseNotFoundException(id));        
         
         expense.setTitle(expenseDto.getTitle());
         expense.setAmount(expenseDto.getAmount());
         expense.setCategory(Category.valueOf(expenseDto.getCategory().toUpperCase()));
-        expense.setDate(LocalDate.parse(expenseDto.getDate()));
+        try {
+            expense.setDate(LocalDate.parse(expenseDto.getDate()));
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Invalid date format: " + expenseDto.getDate());
+        }
         expense.setNotes(expenseDto.getNotes());
 
-        return ExpenseMapper.toDto(expenseRepository.save(expense));
+        Expense updatedExpense = expenseRepository.save(expense);
+        return ExpenseMapper.toDto(updatedExpense);
+    }
+
+    public void deleteExpense(Long id) {
+        if (!expenseRepository.existsById(id)) {
+            throw new ExpenseNotFoundException(id);
+        }
+        expenseRepository.deleteById(id);
     }
 }

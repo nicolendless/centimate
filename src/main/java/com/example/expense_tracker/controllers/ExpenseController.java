@@ -2,20 +2,9 @@ package com.example.expense_tracker.controllers;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.expense_tracker.dtos.ExpenseDto;
-import com.example.expense_tracker.entities.Expense;
-import com.example.expense_tracker.exceptions.ExpenseNotFoundException;
-import com.example.expense_tracker.repositories.ExpenseRepository;
 import com.example.expense_tracker.services.ExpenseService;
 
 import jakarta.validation.Valid;
@@ -23,16 +12,14 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/expenses")
 public class ExpenseController {
-    
-    private ExpenseRepository expenseRepository;
-    private ExpenseService expenseService;
 
-    public ExpenseController(ExpenseRepository expenseRepository, ExpenseService expenseService) {
-        this.expenseRepository = expenseRepository;
+    private final ExpenseService expenseService;
+
+    public ExpenseController(ExpenseService expenseService) {
         this.expenseService = expenseService;
     }
-    
-     /**
+
+    /**
      * Retrieves all expenses with pagination.
      *
      * @param page The page number (starting from 0).
@@ -40,12 +27,12 @@ public class ExpenseController {
      * @return A paginated response with expense details.
      */
     @GetMapping
-    public Page<Expense> getExpenses(
+    public Page<ExpenseDto> getExpenses(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
-        ) {
+    ) {
         PageRequest pageable = PageRequest.of(page, size);
-        return expenseRepository.findAll(pageable);
+        return expenseService.getExpenses(pageable);
     }
 
     /**
@@ -55,44 +42,40 @@ public class ExpenseController {
      * @return A JSON response with the expense details or an error message.
      */
     @GetMapping("{id}")
-    public Expense getExpense(@PathVariable Long id) {
-        return expenseRepository.findById(id)
-            .orElseThrow(() -> new ExpenseNotFoundException(id));
+    public ExpenseDto getExpense(@PathVariable Long id) {
+        return expenseService.getExpenseById(id);
     }
 
     /**
      * Creates a new expense.
      *
-     * @param expenseRequest The request body containing the details of the expense to create.
-     *                       Must be valid according to the defined constraints.
-     * @return The created expense object.
+     * @param expenseDto The expense data transfer object.
+     * @return The created expense.
      */
     @PostMapping
-    public ExpenseDto createExpense(@Valid @RequestBody ExpenseDto expenseInput) {
-        return expenseService.createExpense(expenseInput);
+    public ExpenseDto createExpense(@Valid @RequestBody ExpenseDto expenseDto) {
+        return expenseService.createExpense(expenseDto);
     }
 
     /**
-     * Updates a new expense.
+     * Updates an existing expense.
      *
-     * @param id The ID of the expense to update (from the path).
-     * @param expenseRequest The request body containing the details of the expense to update.
-     *                       Must be valid according to the defined constraints.
-     * @return The created expense object.
+     * @param id The ID of the expense to update.
+     * @param expenseDto The updated expense data transfer object.
+     * @return The updated expense.
      */
     @PutMapping("{id}")
-    public ExpenseDto updatExpense(@PathVariable Long id, @Valid @RequestBody ExpenseDto expenseInput) {
-        return expenseService.updateExpense(id, expenseInput);
+    public ExpenseDto updateExpense(@PathVariable Long id, @Valid @RequestBody ExpenseDto expenseDto) {
+        return expenseService.updateExpense(id, expenseDto);
     }
 
     /**
-     * Deletes a specific expense by its ID.
+     * Deletes an expense by its ID.
      *
-     * @param id The ID of the expense to delete (from the path).
-     * @return empty response if successful or JSON response with errors otherwise
+     * @param id The ID of the expense to delete.
      */
     @DeleteMapping("{id}")
     public void deleteExpense(@PathVariable Long id) {
-        expenseRepository.deleteById(id);
+        expenseService.deleteExpense(id);
     }
 }
