@@ -20,7 +20,6 @@ public class ExpenseService {
     }
 
     public ExpenseDto createExpense(ExpenseDto expenseDto) {
-        
         Expense expense = ExpenseMapper.toEntity(expenseDto);    
         return ExpenseMapper.toDto(expenseRepository.save(expense));
     }
@@ -31,10 +30,10 @@ public class ExpenseService {
         
         expense.setTitle(expenseDto.getTitle());
         expense.setAmount(expenseDto.getAmount());
-        expense.setCategory(Category.valueOf(expenseDto.getCategory()));
+        expense.setCategory(Category.valueOf(expenseDto.getCategory().toUpperCase()));
         expense.setDate(LocalDate.parse(expenseDto.getDate()));
         expense.setNotes(expenseDto.getNotes());
 
         return ExpenseMapper.toDto(expenseRepository.save(expense));
     }
-} 
+}
