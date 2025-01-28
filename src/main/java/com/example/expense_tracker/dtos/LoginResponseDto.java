@@ -1,6 +1,6 @@
 package com.example.expense_tracker.dtos;
 
-public class LoginResponse {
+public class LoginResponseDto {
     private String token;
 
     private long expiresIn;

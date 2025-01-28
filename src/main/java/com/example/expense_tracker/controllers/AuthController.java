@@ -3,15 +3,14 @@ package com.example.expense_tracker.controllers;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.expense_tracker.dtos.LoginRequest;
-import com.example.expense_tracker.dtos.LoginResponse;
-import com.example.expense_tracker.dtos.SignupRequest;
+import com.example.expense_tracker.dtos.LoginRequestDto;
+import com.example.expense_tracker.dtos.LoginResponseDto;
+import com.example.expense_tracker.dtos.SignUpRequestDto;
 import com.example.expense_tracker.entities.User;
 import com.example.expense_tracker.security.JwtUtil;
 import com.example.expense_tracker.services.AuthService;
@@ -27,11 +26,6 @@ public class AuthController {
         this.authService = authService;
         this.jwtUtil = jwtUtil;
     }
-    
-    @GetMapping("/test")
-    public ResponseEntity<String> testEndpoint() {
-        return ResponseEntity.ok("AuthController is working!");
-    }
 
     /**
      * Handles user signup.
@@ -40,7 +34,7 @@ public class AuthController {
      * @return A JSON response with a success message or an error message.
     */
     @PostMapping("/signup")
-    public ResponseEntity<?> signup (@RequestBody SignupRequest request) {
+    public ResponseEntity<?> signup (@RequestBody SignUpRequestDto request) {
         try {
             authService.registerUser(request);
             return ResponseEntity.ok().body(
@@ -60,11 +54,11 @@ public class AuthController {
      * @return A JSON response with a success message or an error message.
     */
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponseDto> authenticate(@RequestBody LoginRequestDto request) {
         User authenticatedUser = authService.authenticatUser(request);
 
         String jwtToken = jwtUtil.generateToken(authenticatedUser.getUsername());
-        LoginResponse loginResponse = new LoginResponse();
+        LoginResponseDto loginResponse = new LoginResponseDto();
         loginResponse.setToken(jwtToken);
         loginResponse.setExpiresIn(jwtUtil.getExpirationTime());
         

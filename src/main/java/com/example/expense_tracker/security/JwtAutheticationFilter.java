@@ -61,7 +61,6 @@ protected void doFilterInternal(HttpServletRequest request, HttpServletResponse 
         }
     }
 
-    System.out.println("SecurityContext: " + SecurityContextHolder.getContext().getAuthentication());
     filterChain.doFilter(request, response);
 }
 

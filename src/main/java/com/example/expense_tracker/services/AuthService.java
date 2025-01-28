@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.expense_tracker.dtos.LoginRequest;
-import com.example.expense_tracker.dtos.SignupRequest;
+import com.example.expense_tracker.dtos.LoginRequestDto;
+import com.example.expense_tracker.dtos.SignUpRequestDto;
 import com.example.expense_tracker.entities.User;
 import com.example.expense_tracker.repositories.UserRepository;
 
@@ -28,7 +28,7 @@ public class AuthService {
         this.authenticationManager = authenticationManager;
     }
 
-    public User registerUser(SignupRequest request) {
+    public User registerUser(SignUpRequestDto request) {
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new IllegalStateException("Username is already taken");
         }
@@ -40,7 +40,7 @@ public class AuthService {
         return userRepository.save(user);
     }
 
-    public User authenticatUser(LoginRequest request) {
+    public User authenticatUser(LoginRequestDto request) {
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                 request.getUsername(), 

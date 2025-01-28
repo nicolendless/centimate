@@ -1,6 +1,6 @@
 package com.example.expense_tracker.dtos;
 
-public class SignupRequest {
+public class SignUpRequestDto {
     private String username;
     private String password;
 
