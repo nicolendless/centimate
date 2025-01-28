@@ -2,6 +2,7 @@ package com.example.expense_tracker.controllers;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,7 +65,7 @@ public class ExpenseController {
      *
      * @param expenseRequest The request body containing the details of the expense to create.
      *                       Must be valid according to the defined constraints.
-     * @return The created expense object.     
+     * @return The created expense object.
      */
     @PostMapping
     public ExpenseDto createExpense(@Valid @RequestBody ExpenseDto expenseInput) {
@@ -77,10 +78,21 @@ public class ExpenseController {
      * @param id The ID of the expense to update (from the path).
      * @param expenseRequest The request body containing the details of the expense to update.
      *                       Must be valid according to the defined constraints.
-     * @return The created expense object.     
+     * @return The created expense object.
      */
     @PutMapping("{id}")
     public ExpenseDto updatExpense(@PathVariable Long id, @Valid @RequestBody ExpenseDto expenseInput) {
         return expenseService.updateExpense(id, expenseInput);
+    }
+
+    /**
+     * Deletes a specific expense by its ID.
+     *
+     * @param id The ID of the expense to delete (from the path).
+     * @return empty response if successful or JSON response with errors otherwise
+     */
+    @DeleteMapping("{id}")
+    public void deleteExpense(@PathVariable Long id) {
+        expenseRepository.deleteById(id);
     }
 }
