@@ -2,6 +2,7 @@ package com.example.expense_tracker.controllers;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.expense_tracker.dtos.ExpenseDto;
@@ -24,14 +25,19 @@ public class ExpenseController {
      *
      * @param page The page number (starting from 0).
      * @param size The number of items per page.
+     * @param sortBy The field to sort by.
+     * @param sortDir The direction to sort (asc or desc).
      * @return A paginated response with expense details.
      */
     @GetMapping
     public Page<ExpenseDto> getExpenses(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(name = "sort", defaultValue = "date") String sortBy,
+            @RequestParam(name = "order", defaultValue = "desc") String sortDir
     ) {
-        PageRequest pageable = PageRequest.of(page, size);
+        Sort.Direction direction = Sort.Direction.fromString(sortDir);
+        PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
         return expenseService.getExpenses(pageable);
     }
 

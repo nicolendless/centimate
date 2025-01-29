@@ -7,9 +7,11 @@ import com.example.expense_tracker.entities.Category;
 import com.example.expense_tracker.entities.Expense;
 
 public class ExpenseMapper {
-    
+
     public static ExpenseDto toDto(Expense expense) {
         ExpenseDto expenseDto = new ExpenseDto();
+
+        expenseDto.setId(expense.getId());
         expenseDto.setTitle(expense.getTitle());
         expenseDto.setAmount(expense.getAmount());
         expenseDto.setCategory(expense.getCategory().toString());

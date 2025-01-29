@@ -10,6 +10,8 @@ import jakarta.validation.constraints.Size;
 
 public class ExpenseDto {
 
+    private Long id;
+
     @NotBlank(message = "Title is mandatory")
     @Size(min = 3, max = 50, message = "Title must be between 3 and 50 characters")
     private String title;
@@ -28,6 +30,14 @@ public class ExpenseDto {
 
     @Size(max = 500, message = "Notes must be at most 500 characters")
     private String notes;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
