@@ -1,7 +1,6 @@
 package com.example.expense_tracker.services;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,23 +32,20 @@ public class ExpenseService {
     }
 
     public ExpenseDto createExpense(ExpenseDto expenseDto) {
-        Expense expense = ExpenseMapper.toEntity(expenseDto);    
+
+        Expense expense = ExpenseMapper.toEntity(expenseDto);
         Expense savedExpense = expenseRepository.save(expense);
         return ExpenseMapper.toDto(savedExpense);
     }
 
     public ExpenseDto updateExpense(Long id, ExpenseDto expenseDto) {
         Expense expense = expenseRepository.findById(id)
-            .orElseThrow(() -> new ExpenseNotFoundException(id));        
+            .orElseThrow(() -> new ExpenseNotFoundException(id));
         
         expense.setTitle(expenseDto.getTitle());
         expense.setAmount(expenseDto.getAmount());
         expense.setCategory(Category.valueOf(expenseDto.getCategory().toUpperCase()));
-        try {
-            expense.setDate(LocalDate.parse(expenseDto.getDate()));
-        } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("Invalid date format: " + expenseDto.getDate());
-        }
+        expense.setDate(LocalDate.parse(expenseDto.getDate()));
         expense.setNotes(expenseDto.getNotes());
 
         Expense updatedExpense = expenseRepository.save(expense);
