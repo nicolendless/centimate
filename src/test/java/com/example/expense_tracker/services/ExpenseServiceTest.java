@@ -5,7 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,16 +21,15 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import com.example.expense_tracker.dtos.ExpenseDto;
 import com.example.expense_tracker.entities.Category;
 import com.example.expense_tracker.entities.Expense;
 import com.example.expense_tracker.exceptions.ExpenseNotFoundException;
-import com.example.expense_tracker.mappers.ExpenseMapper;
 import com.example.expense_tracker.repositories.ExpenseRepository;
 
 public class ExpenseServiceTest {
@@ -68,7 +71,7 @@ public class ExpenseServiceTest {
     }
 
     @Test
-    void testGetExpenses() {        
+    void testGetExpenses_Success() {
         Pageable pageable = PageRequest.of(0, 10);
 
         Page<Expense> expensePage = new PageImpl<>(Collections.singletonList(mockExpense));
