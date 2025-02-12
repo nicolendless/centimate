@@ -20,5 +20,5 @@ spring:
 
 
 jwt:
-  secret: uPXZL9F+KlcBvNMsPb/YX2szWTz7+s0LB8lD69ybZOA=
+  secret: ${JWT_SECRET}
   expiration: 3600000 
