@@ -2,6 +2,8 @@
 
 The **Centimate API** is a Spring Boot-based expense tracker designed to help users manage their financial transactions. It provides secure user authentication with JWT and endpoints for expense management.
 
+**Note**: The API is temporarily available through the following URL: [https://centimate.onrender.com](https://centimate.onrender.com)
+
 ---
 
 ## **Features**
