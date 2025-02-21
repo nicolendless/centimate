@@ -16,7 +16,7 @@ import com.example.expense_tracker.security.JwtUtil;
 import com.example.expense_tracker.services.AuthService;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("api/v1/auth")
 public class AuthController {
 
     private final AuthService authService;

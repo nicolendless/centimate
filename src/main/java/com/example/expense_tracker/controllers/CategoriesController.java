@@ -10,7 +10,7 @@ import com.example.expense_tracker.entities.Category;
 import com.example.expense_tracker.services.CategoryService;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("api/v1/categories")
 public class CategoriesController {
 
     private final CategoryService categoryService;

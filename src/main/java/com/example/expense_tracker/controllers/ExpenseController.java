@@ -19,7 +19,7 @@ import com.example.expense_tracker.services.ExpenseService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/expenses")
+@RequestMapping("api/v1/expenses")
 public class ExpenseController {
 
     private final ExpenseService expenseService;
