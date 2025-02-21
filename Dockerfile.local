@@ -1,5 +1,12 @@
-FROM openjdk:17
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-EXPOSE 8090
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+FROM maven:3.8.6
+
+WORKDIR /app
+
+COPY pom.xml .
+RUN mvn dependency:go-offline
+
+COPY . .
+
+EXPOSE 8080
+
+CMD ["mvn", "spring-boot:run"]
