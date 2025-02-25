@@ -25,7 +25,7 @@ public class ExpenseMapper {
         Expense expense = new Expense();
         expense.setTitle(expenseDto.getTitle());
         expense.setAmount(expenseDto.getAmount());
-        expense.setCategory(Category.valueOf(expenseDto.getCategory()));
+        expense.setCategory(Category.valueOf(expenseDto.getCategory().toUpperCase()));
         expense.setDate(LocalDate.parse(expenseDto.getDate()));
         expense.setNotes(expenseDto.getNotes());
 

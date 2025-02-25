@@ -2,6 +2,8 @@ package com.example.expense_tracker.dtos;
 
 import java.math.BigDecimal;
 
+import com.example.expense_tracker.validation.ValidCategory;
+
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
@@ -23,6 +25,7 @@ public class ExpenseDto {
     private BigDecimal amount;
 
     @NotBlank(message = "Category is mandatory")
+    @ValidCategory
     private String category;
 
     @NotBlank(message = "Date is mandatory")
