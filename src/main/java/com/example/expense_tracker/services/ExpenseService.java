@@ -21,11 +21,15 @@ public class ExpenseService {
         this.expenseRepository = expenseRepository;        
     }
 
-    public Page<ExpenseDto> getExpenses(String title, Pageable pageable) {
+    public Page<ExpenseDto> getExpenses(String title, String category, Pageable pageable) {
         Page<Expense> expenses;
 
-        if (title != null && !title.isBlank()) {
+        if ((title != null && !title.isBlank()) && (category != null && !category.isBlank())) {
+            expenses = expenseRepository.findByTitleContainingIgnoreCaseAndCategory(title, Category.valueOf(category.toUpperCase()), pageable);
+        } else if (title != null && !title.isBlank()) {
             expenses = expenseRepository.findByTitleContainingIgnoreCase(title, pageable);
+        } else if (category != null && !category.isBlank()) {
+            expenses = expenseRepository.findByCategory(Category.valueOf(category.toUpperCase()), pageable);
         } else {
             expenses = expenseRepository.findAll(pageable);
         }
