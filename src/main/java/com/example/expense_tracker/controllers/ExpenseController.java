@@ -42,11 +42,12 @@ public class ExpenseController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(name = "sort", defaultValue = "date") String sortBy,
-            @RequestParam(name = "order", defaultValue = "desc") String sortDir
+            @RequestParam(name = "order", defaultValue = "desc") String sortDir,
+            @RequestParam(name = "title", required = false) String title
     ) {
         Sort.Direction direction = Sort.Direction.fromString(sortDir);
         PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
-        return expenseService.getExpenses(pageable);
+        return expenseService.getExpenses(title, pageable);
     }
 
     /**

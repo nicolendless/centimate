@@ -21,8 +21,16 @@ public class ExpenseService {
         this.expenseRepository = expenseRepository;        
     }
 
-    public Page<ExpenseDto> getExpenses(Pageable pageable) {
-        return expenseRepository.findAll(pageable).map(ExpenseMapper::toDto);
+    public Page<ExpenseDto> getExpenses(String title, Pageable pageable) {
+        Page<Expense> expenses;
+
+        if (title != null && !title.isBlank()) {
+            expenses = expenseRepository.findByTitleContainingIgnoreCase(title, pageable);
+        } else {
+            expenses = expenseRepository.findAll(pageable);
+        }
+
+        return expenses.map(ExpenseMapper::toDto);
     }
 
     public ExpenseDto getExpenseById(Long id) {
