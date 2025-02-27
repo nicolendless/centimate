@@ -17,8 +17,8 @@ The **Centimate API** is a Spring Boot-based expense tracker designed to help us
 
 ### 1. **Clone the Repository**
 ```sh
-git clone <repository-url>
-cd centimate-api
+git clone git@github.com:nicolendless/centimate.git
+cd centimate
 ```
 
 ### **2.Configure Environment Variables**
