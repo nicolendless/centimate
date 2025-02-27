@@ -39,7 +39,7 @@ public class ExpenseController {
      */
     @GetMapping
     public Page<ExpenseDto> getExpenses(
-            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(name = "sort", defaultValue = "date") String sortBy,
             @RequestParam(name = "order", defaultValue = "desc") String sortDir,
@@ -47,7 +47,7 @@ public class ExpenseController {
             @RequestParam(name = "category", required = false) String category
     ) {
         Sort.Direction direction = Sort.Direction.fromString(sortDir);
-        PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
+        PageRequest pageable = PageRequest.of(page-1, size, Sort.by(direction, sortBy));
         return expenseService.getExpenses(title, category, pageable);
     }
 

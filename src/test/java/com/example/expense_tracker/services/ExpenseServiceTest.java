@@ -77,7 +77,7 @@ public class ExpenseServiceTest {
         Page<Expense> expensePage = new PageImpl<>(Collections.singletonList(mockExpense));
         when(expenseRepository.findAll(pageable)).thenReturn(expensePage);
 
-        Page<ExpenseDto> result = expenseService.getExpenses(pageable);
+        Page<ExpenseDto> result = expenseService.getExpenses(null, null, pageable);
     
         assertNotNull(result);
         assertEquals(1, result.getTotalElements());

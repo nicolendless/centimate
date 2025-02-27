@@ -75,7 +75,7 @@ class ExpenseControllerTest {
     @WithMockUser(username = "user", password = "password", roles = "USER")
     void testGetExpenses_Success() throws Exception {
         Page<ExpenseDto> mockPage = new PageImpl<>(Collections.singletonList(mockExpenseDto));
-        when(this.expenseService.getExpenses(any(Pageable.class))).thenReturn(mockPage);
+        when(this.expenseService.getExpenses(null, null, any(Pageable.class))).thenReturn(mockPage);
         this.mockMvc.perform(get("/expenses"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.content[0].id").value(1L))
