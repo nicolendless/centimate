@@ -110,7 +110,7 @@ make clean
 ❌ **Expense DTO includes unnecessary details** -- The DTO returns notes in list views, making responses larger than necessary.\
 ✅ **Solution:** Use a shorter DTO for lists and include notes only in detailed views.
 
-* * * * *
+---
 
 **Future Improvements**
 -----------------------
