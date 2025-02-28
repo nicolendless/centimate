@@ -91,9 +91,9 @@ To stop and remove all containers, volumes, and networks:
 ```sh
 make clean
 ```
+---
 
 **Trade-offs**
---------------
 
 ❌ **Expenses are not user-specific** -- All users can see all expenses.\
 ✅ **Solution:** Associate expenses with a user so each user only sees their own expenses.
@@ -113,7 +113,6 @@ make clean
 ---
 
 **Future Improvements**
------------------------
 
 **Total Spending API** -- Add an endpoint to calculate total spending over a selected period.
 
