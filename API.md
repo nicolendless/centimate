@@ -8,7 +8,7 @@ This document provides detailed information about the available API endpoints in
 **Authentication Endpoints**
 ----------------------------
 
-### **POST** `/auth/signup`
+### **POST** `api/v1/auth/signup`
 
 -   **Description:** Registers a new user.
 -   **Request Body:**
@@ -25,7 +25,7 @@ This document provides detailed information about the available API endpoints in
 
 * * * * *
 
-### **POST** `/auth/login`
+### **POST** `api/v1/auth/login`
 
 -   **Description:** Authenticates the user and returns a token.
 
@@ -61,7 +61,7 @@ This document provides detailed information about the available API endpoints in
 **Expense Management Endpoints**
 --------------------------------
 
-### **GET** `/expenses`
+### **GET** `api/v1/expenses`
 
 -   **Description:** Retrieves a paginated list of expenses.
 
@@ -75,7 +75,7 @@ This document provides detailed information about the available API endpoints in
 
 * * * * *
 
-### **POST** `/expenses`
+### **POST** `api/v1/expenses`
 
 -   **Description:** Creates a new expense.
 
@@ -105,7 +105,7 @@ This document provides detailed information about the available API endpoints in
 
 * * * * *
 
-### **PUT** `/expenses/{id}`
+### **PUT** `api/v1/expenses/{id}`
 
 -   **Description:** Updates an existing expense by ID.
 -   **Request Body:** (Same as POST)
@@ -113,7 +113,7 @@ This document provides detailed information about the available API endpoints in
 
 * * * * *
 
-### **DELETE** `/expenses/{id}`
+### **DELETE** `api/v1/expenses/{id}`
 
 -   **Description:** Deletes an expense by ID.
 -   **Response:** Success or error message.
